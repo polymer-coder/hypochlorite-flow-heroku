@@ -31,9 +31,7 @@ app.get("/", async (req, res) => {
         });
 
         res.on("end", () => {
-            res.send({statusCode: 200});
-            resolve(Buffer.concat(chunks).toString())
-            
+            resolve(Buffer.concat(chunks).toString())  
         });
       });
 
@@ -48,6 +46,7 @@ app.get("/", async (req, res) => {
           channel: "whatsapp",
         })
       );
+      
       req.end();
     });
   };
