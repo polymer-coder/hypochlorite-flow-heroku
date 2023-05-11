@@ -75,6 +75,10 @@ app.get("/", async (req, res) => {
     return res.send("Hello World!");
   } catch (error) {
     console.error(error);
+    return res.send({
+        statusCode: 400, 
+        error,
+    })
   }
 });
 
