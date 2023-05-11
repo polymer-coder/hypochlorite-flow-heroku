@@ -30,7 +30,11 @@ app.get("/", async (req, res) => {
           chunks.push(chunk);
         });
 
-        res.on("end", () => resolve(Buffer.concat(chunks).toString()));
+        res.on("end", () => {
+            res.send({statusCode: 200});
+            resolve(Buffer.concat(chunks).toString())
+            
+        });
       });
 
       req.on("error", reject);
@@ -77,7 +81,7 @@ app.get("/", async (req, res) => {
     console.error(error);
     return res.send({
         statusCode: 400, 
-        error,
+        error: error.toString(),
     })
   }
 });
