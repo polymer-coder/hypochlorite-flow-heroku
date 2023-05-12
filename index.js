@@ -31,7 +31,7 @@ app.get("/", async (req, res) => {
         });
 
         res.on("end", () => {
-            resolve(Buffer.concat(chunks).toString())  
+          resolve(Buffer.concat(chunks).toString());
         });
       });
 
@@ -46,7 +46,7 @@ app.get("/", async (req, res) => {
           channel: "whatsapp",
         })
       );
-      
+
       req.end();
     });
   };
@@ -63,25 +63,29 @@ app.get("/", async (req, res) => {
       "18682916851", // KM
     ];
 
-    for (const number of numbers) {
-      console.log(number);
-      console.log(eventMessage);
-      const data = await request(number, eventMessage);
+    let i = 0;
+
+    async function increment() {
+      const data = await request(numbers[i], eventMessage);
+      i++;
+      console.log(i);
+
       console.log(data);
     }
-    /*
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "ok" }), 
-    };
-    */
+
+    const incrementTimer = setInterval(increment, 1000);
+
+    setTimeout(() => {
+      clearInterval(incrementTimer);
+    }, numbers.length * 1000 + 1000);
+
     return res.send("Hello World!");
   } catch (error) {
     console.error(error);
     return res.send({
-        statusCode: 400, 
-        error: error.toString(),
-    })
+      statusCode: 400,
+      error: error.toString(),
+    });
   }
 });
 
